@@ -1,0 +1,80 @@
+:root {
+  font-family: var(--font-roboto);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+a {
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  place-items: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  text-align: center;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.cardDisplayArea{
+    padding: 10px 20px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardDisplayArea Card {
+    padding: 10px 20px;
+}
+
+.darkCardDisplayArea{
+    composes: cardDisplayArea;
+    background-color: black;
+}
+
+.lightCardDisplayArea{
+    composes: cardDisplayArea;
+    background-color: white;
+}
+
+.appBody {
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    height: 100%;
+}
+.appBodyDark {
+    composes: appBody;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+}
+.appBodyLight {
+    composes: appBody;
+    color: rgba(0, 0, 0, 0.87);
+    color-scheme: dark;
+    background-color: #dbdbdb;
+}
+footer {
+    height: 40vh;
+}

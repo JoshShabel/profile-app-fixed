@@ -1,0 +1,61 @@
+.navbar {
+    background-color: #747bff;
+    height: 60px;
+    position:relative;
+}
+
+.navbarDark {
+    composes: navbar;
+    color: rgba(255, 255, 255, 0.87);
+    color-scheme: dark;
+}
+.navbarLight {
+    composes: navbar;
+    color: rgba(0, 0, 0, 0.87);
+    color-scheme: light;
+}
+
+.button {
+    top: 6px;
+    position:relative;
+}
+
+.leftButton{
+    composes: button;
+    left: 1%;
+    margin-left: 10px;
+}
+.leftButtonDark{
+    composes: leftButton;
+    background-color: #1a1a1a;
+}
+
+.leftButtonLight{
+    composes: leftButton;
+    background-color: #e5e5e5;
+    color: black;
+}
+
+.rightButton {
+    composes: button;
+    margin-right: 10px;
+    position:absolute;
+}
+.rightButtonOneDark{
+    composes: rightButton;
+    left:92%;
+    background-color: #1a1a1a;
+}
+
+.rightButtonOneLight{
+    composes: rightButton;
+    left:calc(100% - 130px);
+    background-color: #e5e5e5;
+    color: black;
+}
+
+.rightButtonTwo{
+    composes: rightButton;
+    left: calc(92% - 130px);
+    top: 13px;
+}

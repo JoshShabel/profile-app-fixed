@@ -1,0 +1,48 @@
+.cardStyle{
+    background-color: #CFB991;
+    padding: 10px 20px;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    animation: fade-in 0.5s;
+    transition: transform 1s ease-out;
+    height:230px;
+}
+
+.cardOneStyle{
+    composes: cardStyle;
+    border-color: #ddb945;
+    border-style: solid;
+}
+
+.cardTwoStyle{
+    composes: cardStyle;
+    border-color: white;
+    border-style: solid;
+}
+
+.cardThreeStyle{
+    composes: cardStyle;
+    border-color: goldenrod;
+    border-style: solid;
+}
+
+img{
+    height: 100px;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+.cardStyle:hover{
+    transform: scale(1.1);
+}
