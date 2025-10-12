@@ -37,6 +37,7 @@ button {
     padding: 10px 20px;
     margin-top: 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     border-radius: 25px;
     width: 80vw;

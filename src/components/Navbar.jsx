@@ -5,7 +5,6 @@ import {Navigate} from "react-router-dom"
 
 const Navbar = ({modeToggle, setModeToggleFunction, setNavigateText}) => {
 
-    console.log("hello");
     return (
         <nav className={modeToggle ? styles.navbarDark : styles.navbarLight}>
             <div>
@@ -15,8 +14,11 @@ const Navbar = ({modeToggle, setModeToggleFunction, setNavigateText}) => {
                 <Link to="/profile-app-fixed/About">
                     <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>About</button>
                 </Link>
-                <Link to="/profile-app-fixed/Profiles">
+                <Link to="/profile-app-fixed/fetched-profiles">
                     <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>Profiles</button>
+                </Link>
+                <Link to="/profile-app-fixed/AddProfiles">
+                    <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>Add Profiles</button>
                 </Link>
             </div>
             <div>

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import styles from '../styles/Card.module.css'
 
-function Card({name, title, email, img, textFilter, job }) {
+function Card({name, title, email, img}) {
 { // TODO: handle alt without creating a separate string beforehand?
     let altName = "Picture of " + {name};
-    if ((name !== undefined) && name.toLowerCase().includes(textFilter.toLowerCase()) && (job === title || job === "None Chosen")) {
+    if (name !== undefined) {
         return (
             <div className={styles.cardOneStyle}>
                 <img src={img} alt={altName} />

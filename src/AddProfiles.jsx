@@ -2,21 +2,26 @@ import PropTypes from "prop-types";
 import Introduction from "./components/Introduction.jsx";
 import Wrapper from "./components/Wrapper.jsx"
 import styles from './styles/index.module.css';
+import ProfileForm from "./components/ProfileForm.jsx";
+import {useState} from "react";
 
-function Home(modeToggle) {
+function AddProfiles(modeToggle) {
+    const [formState, setFormState] = useState(0);
+
+    function handleFormState() {
+        setFormState(formState + 1);
+    }
     return (
         <>
             <div className={modeToggle ? styles.appBodyDark : styles.appBodyLight}>
-                <h1>My React App</h1>
-                <Wrapper children={<Introduction/>}/>
-                <footer></footer>
+                <ProfileForm handleFormState={handleFormState}></ProfileForm>
             </div>
         </>
     )
 }
 
-Home.propTypes = {
+AddProfiles.propTypes = {
     modeToggle: PropTypes.any, // TODO: figure out what this should be
 }
 
-export default Home
+export default AddProfiles

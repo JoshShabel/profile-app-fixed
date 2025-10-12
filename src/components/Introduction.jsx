@@ -3,8 +3,8 @@ const Introduction = () => {
     return (
 
         <div className="introduction">
-            <h2>About</h2>
-            <p>This is the about section</p>
+            <h2>Header</h2>
+            <p>Not sure what's supposed to go here anymore.</p>
         </div>
     )
 }

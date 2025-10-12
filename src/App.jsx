@@ -33,6 +33,7 @@ function App() {
                     <Route path="/profile-app-fixed/" element={<Navigate to="/profile-app-fixed/Home"/>}/>
                     <Route path="/profile-app-fixed/notFound" element={<NotFound/>}/>
                     <Route path="/profile-app-fixed/:page" element={<SubPage modeToggle={modeToggle}/>}/>
+                    <Route path="/profile-app-fixed/:page/profile/:id" element={<SubPage modeToggle={modeToggle}/>}/>
                 </Routes>
             </BrowserRouter>
         </>

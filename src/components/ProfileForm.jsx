@@ -1,5 +1,6 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
+import { Navigate } from "react-router-dom";
 
 function ProfileForm({handleFormState}) {
     const [state, setState] = useState({
@@ -15,6 +16,7 @@ function ProfileForm({handleFormState}) {
             general: ""
         }
     )
+    const [submitted, setSubmitted] = useState(false);
 
 
     const handleSubmit = async(e) => {
@@ -35,7 +37,7 @@ function ProfileForm({handleFormState}) {
             .then(data => console.log(data))
             .catch(error => console.log('Error:', error));
 
-        fetch('https://web.ics.purdue.edu/~jshabel/send-data.php', {
+/*        fetch('https://web.ics.purdue.edu/~jshabel/send-data.php', {
                 method: 'POST',
                 redirect: 'follow',
                 body: new URLSearchParams(formData)
@@ -43,15 +45,15 @@ function ProfileForm({handleFormState}) {
         )
             .then(response => response.json())
             .then(data => console.log(data))
-            .catch(error => console.log('Error:', error))
+            .catch(error => console.log('Error:', error))*/
         try{
             const response = await fetch('https://web.ics.purdue.edu/~jshabel/send-data.php', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
                 }
             );
             const result = await response.json();
-            console.log(result.message);
+            //console.log(result.message);
         }catch(error){
             console.log(error);
         }
@@ -68,6 +70,7 @@ function ProfileForm({handleFormState}) {
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.log('Error:', error));
+        //setSubmitted(true);
     }
     function handleChange(e) {
         if (e.target.name === "image") {
@@ -85,49 +88,58 @@ function ProfileForm({handleFormState}) {
             setState({...state, [e.target.name]: e.target.value});
         }
     }
-    return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={state.name}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={state.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Title"
-                    value={state.title}
-                    onChange={handleChange}
-                    required
-                />
-                <textarea
-                    name="bio"
-                    placeholder="Enter description"
-                    maxLength={200}
-                    value={state.bio}
-                    onChange={handleChange}
-                    required
-                ></textarea>
-                <label htmlFor="image">Choose a profile picture:</label>
-                    <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp, image/avif" onChange={handleChange} required/>
-                {errors.image && <p>{errors.image}</p>}
-                <button type="submit">Send</button>
-            </form>
-        </div>
+    if (submitted) {
+        return (
+            <Navigate to="/profile-app-fixed/Home">
+            </Navigate>
+            )
+    }
+    else {
+        return (
 
-    )
+            <div>
+                <form onSubmit={handleSubmit} enctype="multipart/form-data" >
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={state.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={state.email}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                        value={state.title}
+                        onChange={handleChange}
+                        required
+                    />
+                    <textarea
+                        name="bio"
+                        placeholder="Enter description"
+                        maxLength={200}
+                        value={state.bio}
+                        onChange={handleChange}
+                        required
+                    ></textarea>
+                    <label htmlFor="image">Choose a profile picture:</label>
+                        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp, image/avif" onChange={handleChange} required/>
+                    {errors.image && <p>{errors.image}</p>}
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+
+        )
+    }
 }
 
 ProfileForm.propTypes = {
