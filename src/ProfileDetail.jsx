@@ -5,11 +5,13 @@ import Card from "./components/Card.jsx";
 import image1 from "./assets/guy.jpeg"
 import image2 from "./assets/person2.jpg"
 import image3 from "./assets/person3.jpg"
+import { useContext } from 'react';
+import ModeContext from "./ModeContext.jsx";
 
 
 // TODO: For some reason I don't need loading anymore?
-function FetchedProfiles({modeToggle, id}) {
-
+function ProfileDetail({id}) {
+    const { isOn, toggleOn } = useContext(ModeContext);
     const [textInput, setTextInput] = useState("");
     const [job, setJob] = useState('None Chosen');
     const [profile, setProfile] = useState([]);
@@ -24,15 +26,14 @@ function FetchedProfiles({modeToggle, id}) {
         }
     }
 
-
     useEffect( () => {
         fetchData();
 
     }, [loading, textInput, job]);
-
+console.log(isOn);
     return (
         <>
-            <div className={modeToggle ? styles.appBodyDark : styles.appBodyLight}>
+            <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
                 <Card name={profile.name} title={profile.title} email={profile.email}
                                   img={profile.image_url}/>
                 <footer></footer>
@@ -41,9 +42,8 @@ function FetchedProfiles({modeToggle, id}) {
     )
 }
 
-FetchedProfiles.propTypes = {
-    modeToggle: PropTypes.any, // TODO: figure out what this should be
+ProfileDetail.propTypes = {
     id: PropTypes.any,
 }
 
-export default FetchedProfiles
+export default ProfileDetail

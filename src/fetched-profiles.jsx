@@ -5,11 +5,12 @@ import Card from "./components/Card.jsx";
 import image1 from "./assets/guy.jpeg"
 import image2 from "./assets/person2.jpg"
 import image3 from "./assets/person3.jpg"
-
+import { useContext } from 'react';
+import ModeContext from "./ModeContext.jsx";
 
 // TODO: For some reason I don't need loading anymore?
-function FetchedProfiles(modeToggle) {
-
+function FetchedProfiles() {
+    const { isOn, toggleOn } = useContext(ModeContext);
     const [textInput, setTextInput] = useState("");
     const [job, setJob] = useState('None Chosen');
     const [titles, setTitles] = useState(["", ""]);
@@ -83,7 +84,7 @@ function FetchedProfiles(modeToggle) {
 
     return (
         <>
-            <div className={modeToggle ? styles.appBodyDark : styles.appBodyLight}>
+            <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
                 <label>Choose Job:</label>
                 <select value={job} onChange={handleChange}>
                     <option value="None Chosen">None Chosen</option>
@@ -107,7 +108,7 @@ function FetchedProfiles(modeToggle) {
                 }>Reset
                 </button>
                 <br/>
-                <div className={modeToggle ? styles.darkCardDisplayArea : styles.lightCardDisplayArea}>
+                <div className={isOn ? styles.darkCardDisplayArea : styles.lightCardDisplayArea}>
                     {none        ? null
                         : profiles.map((profile) => (
                             <Card key={profile.email} name={profile.name} title={profile.title} email={profile.email}
@@ -119,10 +120,6 @@ function FetchedProfiles(modeToggle) {
             </div>
         </>
     )
-}
-
-FetchedProfiles.propTypes = {
-    modeToggle: PropTypes.any, // TODO: figure out what this should be
 }
 
 export default FetchedProfiles

@@ -2,29 +2,31 @@ import { Link } from "react-router-dom";
 import styles from '../styles/Navbar.module.css'
 import PropTypes from "prop-types";
 import {Navigate} from "react-router-dom"
-
-const Navbar = ({modeToggle, setModeToggleFunction, setNavigateText}) => {
+import { useContext } from 'react';
+import ModeContext from "../ModeContext.jsx";
+const Navbar = () => {
+    const { isOn, toggleOn } = useContext(ModeContext);
 
     return (
-        <nav className={modeToggle ? styles.navbarDark : styles.navbarLight}>
+        <nav className={isOn ? styles.navbarDark : styles.navbarLight}>
             <div>
                 <Link to="/profile-app-fixed/Home">
-                    <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>Home</button>
+                    <button className={isOn ? styles.leftButtonDark : styles.leftButtonLight}>Home</button>
                 </Link>
                 <Link to="/profile-app-fixed/About">
-                    <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>About</button>
+                    <button className={isOn ? styles.leftButtonDark : styles.leftButtonLight}>About</button>
                 </Link>
                 <Link to="/profile-app-fixed/fetched-profiles">
-                    <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>Profiles</button>
+                    <button className={isOn ? styles.leftButtonDark : styles.leftButtonLight}>Profiles</button>
                 </Link>
                 <Link to="/profile-app-fixed/AddProfiles">
-                    <button className={modeToggle ? styles.leftButtonDark : styles.leftButtonLight}>Add Profiles</button>
+                    <button className={isOn ? styles.leftButtonDark : styles.leftButtonLight}>Add Profiles</button>
                 </Link>
             </div>
             <div>
                 <h3 className={styles.rightButtonTwo}>Toggle mode:</h3>
-                <button className={modeToggle ? styles.rightButtonOneDark : styles.rightButtonOneLight} onClick={setModeToggleFunction}>
-                    {modeToggle ? "Dark" : "Light"}
+                <button className={isOn ? styles.rightButtonOneDark : styles.rightButtonOneLight} onClick={toggleOn}>
+                    {isOn ? "Dark" : "Light"}
                 </button>
             </div>
         </nav>
@@ -32,9 +34,7 @@ const Navbar = ({modeToggle, setModeToggleFunction, setNavigateText}) => {
 };
 
 Navbar.propTypes = {
-    modeToggle: PropTypes.bool,
-    setModeToggleFunction: PropTypes.func,
-    setNavigateFunction: PropTypes.any,
+
 }
 
 export default Navbar;

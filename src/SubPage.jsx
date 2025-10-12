@@ -9,23 +9,30 @@ import NotFound from "./NotFound.jsx";
 import AddProfiles from "./AddProfiles.jsx";
 import ProfileDetail from "./ProfileDetail.jsx";
 
-function SubPage(modeToggle) {
+function SubPage() {
     const { page, id } = useParams();
+
     function chooseSubpage() {
         switch(page) {
             case "Home":
-                return <Home modeToggle={modeToggle}/>
+                return (
+                        <Home/>
+                );
             case "About":
-                return <About modeToggle={modeToggle}/>
+                return <About/>
             case "fetched-profiles":
                 if (id !== undefined && !Number.isNaN(id)) {
-                    return <ProfileDetail modeToggle={modeToggle} id={id}/>;
+                    return (
+                        <ProfileDetail id={id}/>
+                    );
                 }
                 else{
-                    return <FetchedProfiles modeToggle={modeToggle}/>
+                    return (
+                            <FetchedProfiles/>
+                    );
                 }
             case "AddProfiles":
-                return <AddProfiles modeToggle={modeToggle}/>
+                return <AddProfiles/>
             default:
                 return <Navigate to="/profile-app-fixed/notFound"/>
         }
@@ -42,7 +49,6 @@ function SubPage(modeToggle) {
 SubPage.propTypes = {
     page: PropTypes.string,
     innerPage: PropTypes.string,
-	modeToggle: PropTypes.bool
 }
 
 export default SubPage;

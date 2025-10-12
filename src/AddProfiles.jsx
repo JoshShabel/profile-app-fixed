@@ -4,8 +4,11 @@ import Wrapper from "./components/Wrapper.jsx"
 import styles from './styles/index.module.css';
 import ProfileForm from "./components/ProfileForm.jsx";
 import {useState} from "react";
+import { useContext } from 'react';
+import ModeContext from "./ModeContext.jsx";
 
-function AddProfiles(modeToggle) {
+function AddProfiles() {
+    const { isOn, toggleOn } = useContext(ModeContext);
     const [formState, setFormState] = useState(0);
 
     function handleFormState() {
@@ -13,15 +16,11 @@ function AddProfiles(modeToggle) {
     }
     return (
         <>
-            <div className={modeToggle ? styles.appBodyDark : styles.appBodyLight}>
+            <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
                 <ProfileForm handleFormState={handleFormState}></ProfileForm>
             </div>
         </>
     )
-}
-
-AddProfiles.propTypes = {
-    modeToggle: PropTypes.any, // TODO: figure out what this should be
 }
 
 export default AddProfiles

@@ -15,27 +15,27 @@ import image1 from "./assets/guy.jpeg"
 import image2 from "./assets/person2.jpg"
 import image3 from "./assets/person3.jpg"
 import SubPage from "./SubPage.jsx";
+import { ModeProvider } from "./ModeContext.jsx";
+
 
 // TODO: light dark mode toggle. When did i break this?
 
 function App() {
-    const [modeToggle, setModeToggle] = useState(true);
 
-    const appModeToggleFunction = () => {
-        setModeToggle(prevModeToggle => !prevModeToggle);
-    }
 
     return (
         <>
+            <ModeProvider>
             <BrowserRouter>
-                <Navbar modeToggle={modeToggle} setModeToggleFunction={appModeToggleFunction}/>
+                    <Navbar/>
                 <Routes>
                     <Route path="/profile-app-fixed/" element={<Navigate to="/profile-app-fixed/Home"/>}/>
                     <Route path="/profile-app-fixed/notFound" element={<NotFound/>}/>
-                    <Route path="/profile-app-fixed/:page" element={<SubPage modeToggle={modeToggle}/>}/>
-                    <Route path="/profile-app-fixed/:page/profile/:id" element={<SubPage modeToggle={modeToggle}/>}/>
+                    <Route path="/profile-app-fixed/:page" element={<SubPage/>}/>
+                    <Route path="/profile-app-fixed/:page/profile/:id" element={<SubPage/>}/>
                 </Routes>
             </BrowserRouter>
+        </ModeProvider >
         </>
     );
 }
