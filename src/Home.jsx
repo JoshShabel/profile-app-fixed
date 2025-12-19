@@ -16,9 +16,6 @@ function Home() {
     const [job, setJob] = useState('None Chosen');
     const [titles, setTitles] = useState(["", ""]);
     const [profiles, setProfiles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [loadingData, setLoadingData] = useState(true);
-    const [loadingTitles, setLoadingTitles] = useState(true);
     const { isOn, toggleOn } = useContext(ModeContext);
 
 
@@ -39,9 +36,6 @@ function Home() {
         const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php");
         const result = await response.json();
         setProfiles(result);
-        if (loadingData === true){
-            setLoadingData(false);
-        }
     }
     // TODO: validate email key
     async function getTitlesList(){
@@ -50,9 +44,6 @@ function Home() {
         var titleVariable = result.JSON.Data;
         setTitles(titleVariable);
         console.log(titles);
-        if (loadingTitles === true){
-            setLoadingTitles(false);
-        }
     }
 
     async function getFilteredTitlesList(){
@@ -62,9 +53,9 @@ function Home() {
         const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10");
         const result = await response.json();
         console.log(result);
-        if (loading === true){ // this shouldn't be needed, but I might as well be safe?
+/*        if (loading === true){ // this shouldn't be needed, but I might as well be safe?
             setLoading(false);
-        }
+        }*/
     }
 
 
@@ -74,15 +65,15 @@ function Home() {
         if (textInput === "" || job === "None Chosen"){
             getTitlesList();
             fetchData();
-            if (!(loadingData || loadingTitles)){
+/*            if (!(loadingData || loadingTitles)){
                 setLoading(false);
-            }
+            }*/
         }
         else{
             getFilteredTitlesList();
         }
 
-    }, [formState, loading, textInput, job]);
+    }, [formState, textInput, job]);
 
     const handleChange = (event) => {
         setJob(event.target.value);
@@ -92,10 +83,6 @@ function Home() {
         <>
             <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
                 <h1>My React App</h1>
-
-                <button onClick={() => dispatch({ type: "ACTION_TYPE", payload: "Some info" })}>
-                    Click me
-                </button>
 
                 <Wrapper children={<Introduction/>}/>
                 <ProfileForm handleFormState={() => dispatch("update")}></ProfileForm>

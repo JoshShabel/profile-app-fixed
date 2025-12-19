@@ -98,7 +98,7 @@ function ProfileForm({handleFormState}) {
         return (
 
             <div>
-                <form onSubmit={handleSubmit} enctype="multipart/form-data" >
+                <form onSubmit={handleSubmit} encType="multipart/form-data" >
                     <input
                         type="text"
                         name="name"
