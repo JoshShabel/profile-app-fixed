@@ -7,19 +7,33 @@ import ModeContext from "./ModeContext.jsx";
 import {useEffect, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
 import ProfileForm from "./components/ProfileForm.jsx";
-import image1 from "./assets/guy.jpeg"
-import image2 from "./assets/person2.jpg"
-import image3 from "./assets/person3.jpg"
+import { useReducer } from "react";
+
+
+
 function Home() {
     const [textInput, setTextInput] = useState("");
     const [job, setJob] = useState('None Chosen');
-    const [formState, setFormState] = useState(0);
     const [titles, setTitles] = useState(["", ""]);
     const [profiles, setProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingData, setLoadingData] = useState(true);
     const [loadingTitles, setLoadingTitles] = useState(true);
     const { isOn, toggleOn } = useContext(ModeContext);
+
+
+    const reducerFunction = (state, action) => {
+        switch (action.type) {
+            case "update":
+                return state + 1;
+            default:
+                console.log("this should never be reached")
+                return state + 1;
+        }
+    }
+
+    const [formState, dispatch] = useReducer(reducerFunction,  0);
+
 
     async function fetchData(){
         const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php");
@@ -54,6 +68,8 @@ function Home() {
     }
 
 
+
+
     useEffect( () => {
         if (textInput === "" || job === "None Chosen"){
             getTitlesList();
@@ -68,10 +84,6 @@ function Home() {
 
     }, [formState, loading, textInput, job]);
 
-    function handleFormState() {
-        setFormState(formState + 1);
-    }
-
     const handleChange = (event) => {
         setJob(event.target.value);
     };
@@ -80,8 +92,13 @@ function Home() {
         <>
             <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
                 <h1>My React App</h1>
+
+                <button onClick={() => dispatch({ type: "ACTION_TYPE", payload: "Some info" })}>
+                    Click me
+                </button>
+
                 <Wrapper children={<Introduction/>}/>
-                <ProfileForm handleFormState={handleFormState}></ProfileForm>
+                <ProfileForm handleFormState={() => dispatch("update")}></ProfileForm>
                 <label>Choose Job:</label>
                 <select value={job} onChange={handleChange}>
                     <option value="None Chosen">None Chosen</option>
