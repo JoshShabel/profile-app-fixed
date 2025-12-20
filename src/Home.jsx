@@ -79,7 +79,7 @@ function Home() {
     return (
         <>
             <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
-                <h1 >My React App - Longer Title For The Purpose of demonstrating something</h1>
+                <h1 >My React App</h1>
 
                 <Wrapper children={<Introduction/>}/>
                 <ProfileForm handleFormState={() => dispatch("update")}></ProfileForm>
