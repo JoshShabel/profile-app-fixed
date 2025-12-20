@@ -1,6 +1,7 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
+import useForm from "./useForm.jsx";
 
 function ProfileForm({handleFormState}) {
     const [state, setState] = useState({
@@ -21,56 +22,22 @@ function ProfileForm({handleFormState}) {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('name', state.name.trim());
-        formData.append('email', state.email.trim());
-        formData.append('bio', state.title.trim());
-        formData.append('title', state.bio.trim());
-        if (state.image) formData.append("image", state.image);
-        fetch('https://web.ics.purdue.edu/~jshabel/create-table.php', {
-                method: 'POST',
-                redirect: 'follow',
-                body: new URLSearchParams(formData)
-            }
-        )
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log('Error:', error));
-
-/*        fetch('https://web.ics.purdue.edu/~jshabel/send-data.php', {
-                method: 'POST',
-                redirect: 'follow',
-                body: new URLSearchParams(formData)
-            }
-        )
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log('Error:', error))*/
-        try{
-            const response = await fetch('https://web.ics.purdue.edu/~jshabel/send-data.php', {
+        const formData = useForm(state).then(formData => {
+            handleFormState();
+            fetch('https://web.ics.purdue.edu/~jshabel/create-table.php', {
                     method: 'POST',
-                    body: formData,
+                    redirect: 'follow',
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    body: new URLSearchParams(formData)
                 }
-            );
-            const result = await response.json();
-            //console.log(result.message);
-        }catch(error){
-            console.log(error);
-        }
-        handleFormState();
-        fetch('https://web.ics.purdue.edu/~jshabel/create-table.php', {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                body: new URLSearchParams(formData)
-            }
-        )
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log('Error:', error));
-        //setSubmitted(true);
+            )
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log('Error:', error));
+            //setSubmitted(true);})
+        })
     }
     function handleChange(e) {
         if (e.target.name === "image") {
