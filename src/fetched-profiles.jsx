@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styles from './styles/index.module.css';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
 import image1 from "./assets/guy.jpeg"
 import image2 from "./assets/person2.jpg"
@@ -110,10 +110,10 @@ function FetchedProfiles() {
                 <br/>
                 <div className={isOn ? styles.darkCardDisplayArea : styles.lightCardDisplayArea}>
                     {none        ? null
-                        : profiles.map((profile) => (
+                        : useMemo(() => {profiles.map((profile) => (
                             <Card key={profile.email} name={profile.name} title={profile.title} email={profile.email}
                                   img={profile.image_url}/>
-                        ))
+                        ))}, [profiles])
                     }
                 </div>
                 <footer></footer>
