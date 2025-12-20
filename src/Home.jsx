@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Introduction from "./components/Introduction.jsx";
 import Wrapper from "./components/Wrapper.jsx"
 import styles from './styles/index.module.css';
-import { useContext } from 'react';
+import {useContext, useLayoutEffect} from 'react';
 import ModeContext from "./ModeContext.jsx";
 import {useEffect, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
@@ -17,8 +17,7 @@ function Home() {
     const [titles, setTitles] = useState(["", ""]);
     const [profiles, setProfiles] = useState([]);
     const { isOn, toggleOn } = useContext(ModeContext);
-
-
+    const focusRef = useRef(null);
     const reducerFunction = (state, action) => {
         switch (action.type) {
             case "update":
@@ -43,16 +42,13 @@ function Home() {
         const result = await response.json();
         var titleVariable = result.JSON.Data;
         setTitles(titleVariable);
-        console.log(titles);
+        /*console.log(titles);*/
     }
 
     async function getFilteredTitlesList(){
-        var page = 1;
-        var search = textInput;
-        var title = job;
         const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10");
         const result = await response.json();
-        console.log(result);
+        /*console.log(result);*/
 /*        if (loading === true){ // this shouldn't be needed, but I might as well be safe?
             setLoading(false);
         }*/
@@ -68,6 +64,7 @@ function Home() {
 /*            if (!(loadingData || loadingTitles)){
                 setLoading(false);
             }*/
+            focusRef.current.focus();
         }
         else{
             getFilteredTitlesList();
@@ -82,7 +79,7 @@ function Home() {
     return (
         <>
             <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
-                <h1>My React App</h1>
+                <h1 >My React App - Longer Title For The Purpose of demonstrating something</h1>
 
                 <Wrapper children={<Introduction/>}/>
                 <ProfileForm handleFormState={() => dispatch("update")}></ProfileForm>
@@ -97,6 +94,7 @@ function Home() {
                 </select>
                 <label>What is their name?</label>
                 <input
+                    ref={focusRef}
                     type="text"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}

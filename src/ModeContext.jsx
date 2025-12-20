@@ -6,7 +6,9 @@ export default ModeContext;
 export const ModeProvider = ({children}) => {
     const [isOn, setIsOn] = useState(false);
     const toggleOn = () => {setIsOn(prevIsOn => !prevIsOn)};
+/*
     console.log(children)
+*/
     return (
         < ModeContext.Provider value={{isOn, toggleOn}}>
             {children}

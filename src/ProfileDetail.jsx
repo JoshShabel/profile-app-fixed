@@ -30,7 +30,9 @@ function ProfileDetail({id}) {
         fetchData();
 
     }, [loading, textInput, job]);
+/*
 console.log(isOn);
+*/
     return (
         <>
             <div className={isOn ? styles.appBodyDark : styles.appBodyLight}>
