@@ -9,6 +9,9 @@ const Card = memo(({name, title, email, img, textFilter, job }) => {
 
     useLayoutEffect(() => {
 
+        if (heightRef.current === null)
+            return
+
         const domHeight = heightRef.current.getBoundingClientRect().height;
 
         if (domHeight > 24){

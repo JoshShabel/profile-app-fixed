@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Introduction from "./components/Introduction.jsx";
 import Wrapper from "./components/Wrapper.jsx"
 import styles from './styles/index.module.css';
-import {useCallback, useContext, useLayoutEffect} from 'react';
+import {lazy, Suspense, useCallback, useContext, useLayoutEffect} from 'react';
 import ModeContext from "./ModeContext.jsx";
 import {useEffect, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
@@ -15,7 +15,6 @@ function Home() {
     const [textInput, setTextInput] = useState("");
     const [job, setJob] = useState('None Chosen');
     const [titles, setTitles] = useState(["", ""]);
-    const [profiles, setProfiles] = useState([]);
     const { isOn, toggleOn } = useContext(ModeContext);
     const focusRef = useRef(null);
     const reducerFunction = (state, action) => {
@@ -28,49 +27,34 @@ function Home() {
         }
     }
 
+    const LazyComponent = lazy(() =>
+        import("./LazyComponent.jsx"));
+
     const [formState, dispatch] = useReducer(reducerFunction,  0);
+    const [profilesState, updateProfiles] = useReducer(reducerFunction,  0);
 
 
-    async function fetchData(){
-        const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php");
-        const result = await response.json();
-        setProfiles(result);
-    }
+
     // TODO: validate email key
     async function getTitlesList(){
         const response = await fetch("https://web.ics.purdue.edu/~jshabel/get-titles.php");
         const result = await response.json();
         var titleVariable = result.JSON.Data;
         setTitles(titleVariable);
-        /*console.log(titles);*/
     }
 
-    async function getFilteredTitlesList(){
-        const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10");
-        const result = await response.json();
-        /*console.log(result);*/
-/*        if (loading === true){ // this shouldn't be needed, but I might as well be safe?
-            setLoading(false);
-        }*/
-    }
+
 
 
 
 
     useEffect( () => {
         if (textInput === "" || job === "None Chosen"){
-            getTitlesList();
-            fetchData();
-/*            if (!(loadingData || loadingTitles)){
-                setLoading(false);
-            }*/
+            updateProfiles("update")
             focusRef.current.focus();
+            getTitlesList()
         }
-        else{
-            getFilteredTitlesList();
-        }
-
-    }, [formState, textInput, job]);
+    }, [formState, job]);
 
     const handleChange = useCallback((event) => {
         setJob(event.target.value);
@@ -84,7 +68,7 @@ function Home() {
                 <Wrapper children={<Introduction/>}/>
                 <ProfileForm handleFormState={() => dispatch("update")}></ProfileForm>
                 <label>Choose Job:</label>
-                <select value={job} onChange={handleChange}>
+                <select style={{width: "150px"}} value={job} onChange={handleChange}>
                     <option value="None Chosen">None Chosen</option>
                     {
                         titles.map((title, i) => (
@@ -107,15 +91,9 @@ function Home() {
                 }>Reset
                 </button>
                 <br/>
-                <div className={isOn ? styles.darkCardDisplayArea : styles.lightCardDisplayArea}>
-                    {
-                        profiles.map((profile) => (
-                            <Card key={profile.email} name={profile.name} title={profile.title} email={profile.email}
-                                  img={profile.image_url} textFilter={textInput} job={job}/>
-                        ))
-
-                    }
-                </div>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <LazyComponent profiles={profilesState} textInput={textInput} job={job}/>
+                </Suspense>
                 <footer></footer>
             </div>
         </>
