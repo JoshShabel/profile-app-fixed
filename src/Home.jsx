@@ -8,7 +8,7 @@ import {useEffect, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
 import ProfileForm from "./components/ProfileForm.jsx";
 import { useReducer } from "react";
-
+import  useFetch  from "./useFetch.jsx";
 
 
 function Home() {
@@ -37,16 +37,10 @@ function Home() {
 
     // TODO: validate email key
     async function getTitlesList(){
-        const response = await fetch("https://web.ics.purdue.edu/~jshabel/get-titles.php");
-        const result = await response.json();
+        const result = await useFetch("https://web.ics.purdue.edu/~jshabel/get-titles.php")
         var titleVariable = result.JSON.Data;
         setTitles(titleVariable);
     }
-
-
-
-
-
 
     useEffect( () => {
         if (textInput === "" || job === "None Chosen"){

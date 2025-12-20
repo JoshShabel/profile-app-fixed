@@ -7,6 +7,7 @@ import image2 from "./assets/person2.jpg"
 import image3 from "./assets/person3.jpg"
 import { useContext } from 'react';
 import ModeContext from "./ModeContext.jsx";
+import useFetch from "./useFetch.jsx";
 
 // TODO: For some reason I don't need loading anymore?
 function FetchedProfiles() {
@@ -22,8 +23,7 @@ function FetchedProfiles() {
 
 
     async function fetchData(){
-        const response = await fetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php");
-        const result = await response.json();
+        const result = await useFetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php")
         setProfiles(result);
         if (loadingData === true){
             setLoadingData(false);
@@ -31,8 +31,7 @@ function FetchedProfiles() {
     }
     // TODO: validate email key
     async function getTitlesList(){
-        const response = await fetch("https://web.ics.purdue.edu/~jshabel/get-titles.php");
-        const result = await response.json();
+        const result = await useFetch("https://web.ics.purdue.edu/~jshabel/fetch-data.php")
         var titleVariable = result.JSON.Data;
         setTitles(titleVariable);
         //console.log(titles);
@@ -45,9 +44,7 @@ function FetchedProfiles() {
         var page = 1;
         var search = textInput;
         var title = job;
-        const response = await fetch(`https://web.ics.purdue.edu/~jshabel/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`);
-
-        const result = await response.json();
+        const result = await useFetch(`https://web.ics.purdue.edu/~jshabel/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
         if (result.error === "No profiles found"){
             setNone(true);
         }
