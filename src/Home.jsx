@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Introduction from "./components/Introduction.jsx";
 import Wrapper from "./components/Wrapper.jsx"
 import styles from './styles/index.module.css';
-import {useContext, useLayoutEffect} from 'react';
+import {useCallback, useContext, useLayoutEffect} from 'react';
 import ModeContext from "./ModeContext.jsx";
 import {useEffect, useRef, useState} from "react";
 import Card from "./components/Card.jsx";
@@ -72,9 +72,9 @@ function Home() {
 
     }, [formState, textInput, job]);
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         setJob(event.target.value);
-    };
+    }, []);
     
     return (
         <>
